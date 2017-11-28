@@ -307,13 +307,13 @@ def drawRubik(thisCube,text=helpText,x=2560,y=0):
     glutWMCloseFunc(closeWindow) 
     glutReshapeFunc(ReSizeGLScene)
     glutKeyboardFunc(keyPressed)
-    glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION) 
+#    glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION) 
     #glutSetOption(GLUT_ACTION_GLUTMAINLOOP_RETURNS, GLUT_ACTION_CONTINUE_EXECUTION) 
     InitGL(640, 480)
     print(text)
-    while not stopDraw:
-        glutMainLoopEvent()
-    #glutMainLoop()
+#    while not stopDraw:
+#        glutMainLoopEvent()
+    glutMainLoop()
 
 if __name__ == '__main__':
     global cube

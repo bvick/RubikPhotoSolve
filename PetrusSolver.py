@@ -746,7 +746,7 @@ def all4Bmoves():
 def positionFinalCorners(cube):
     def findSwaps():
         cf = [cube.sposAtSpos((0,i)) for i in [0,2,4,6]]
-        csp=[Rcube.cornerSideFacet(cf[i],topside)[1]//2 for i in range(4)]
+        csp=[Rcube.cornerSideLoc(cf[i],topside)[1]//2 for i in range(4)]
         #print("cf",cf,"topside",topside,"csp",csp)
         swap=np.empty(4,bool)
         for i in range(4):
@@ -769,8 +769,8 @@ def positionFinalCorners(cube):
                 cube.rotateSides(niklas)
     
     a=cube.side3facet(0,1,4)
-    b=cube.sposOfSpos(a)
-    pos = Rcube.cornerSideFacet(b,0)[1]
+    b=cube.facetLoc[a]
+    pos = Rcube.cornerSideLoc(b,0)[1]
     #print("pos",a,b,pos)
     cube.rotateSide(0,-pos//2)
     swap=findSwaps()
@@ -785,10 +785,10 @@ def twistFinalCorners(cube):
     antisune=    Rcube.reverseMoves(sune)
     def locateGoodies():
         topf = [cube.side3facet(0,1,4),cube.side3facet(0,4,3),cube.side3facet(0,3,2),cube.side3facet(0,2,1)]
-        cf = [cube.sposOfSpos(topf[i]) for i in range(4)]
+        cf = [cube.facetLoc[topf[i]] for i in range(4)]
         #print("topf",topf)
-        goodies=[Rcube.cornerSideFacet(cf[i],0) for i in range(4) if cf[i][0] ==0]
-        badies=[Rcube.cornerSideFacet(cf[i] ,0) for i in range(4) if cf[i][0] !=0]
+        goodies=[Rcube.cornerSideLoc(cf[i],0) for i in range(4) if cf[i][0] ==0]
+        badies=[Rcube.cornerSideLoc(cf[i] ,0) for i in range(4) if cf[i][0] !=0]
         #drawRubik(cube)
         return(goodies,len(goodies),badies,cf)
 
@@ -835,7 +835,7 @@ def positionFinalEdges(cube):
         posRot=Rcube.posRot0[side0][side1]
         facetTgt=np.array([[0,i] for i in [1,3,5,7]],np.int8)
         #print("facetTgt",facetTgt)
-        facetCur=np.array([cube.facetLoc[side0,(i-posRot)%8] for i in [1,3,5,7]],np.int8)
+        facetCur=np.array([cube.facetLoc[Rcube.home2facet((side0,(i-posRot)%8))] for i in [1,3,5,7]],np.int8)
         #print("facetCur", facetCur)
         facetDist = np.array([abs(facetTgt[i,1] - facetCur[i,1]) for i in range(4)],np.int8)
         #print(facetDist)
@@ -882,7 +882,7 @@ def solve233(cube):
     cube.phase.append(len(cube.redTurns))
     return(len(cube.redTurns)-turnCount)
 
-def PetrusSolve(xcube,debug=False,helmType='double'):
+def PetrusSolve(xcube,debug=False,helmType='full'):
     useHelm=(helmType !='none')
     fullHelm=helmType in ('double','full')
     cube,step1TC,step2TC,step3TC,step4TC=solveThrough4(xcube,debug,helmType)

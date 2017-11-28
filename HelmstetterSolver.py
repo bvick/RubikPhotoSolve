@@ -99,8 +99,8 @@ def convertHelmstetter(fullHelm=True):
                     # adjust for net change to the top .  Needed to ensure mirrors and inverses work
                     cube=Rcube()
                     cube.rotateSides(moves)
-                    facet=(0,0)
-                    spos=Rcube.cornerSideFacet(cube.facetLoc[facet],0)
+                    facet=0
+                    spos=Rcube.cornerSideLoc(cube.facetLoc[facet],0)
                     adjMove=(0,((-spos[1])//2)%4)
                     combinations[dkey]=moves+[adjMove]
 #                     printvars("case","facet","movestr","moves","adjMove")

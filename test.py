@@ -21,9 +21,8 @@ flocs=np.array([[[2, 0], [0, 5], [3, 0], [2, 5], [2, 6], [0, 1], [0, 2], [0, 3],
 runSaved = 0
 pairDone=[ ]
 
-if runSaved==0: runCount=10000
+if runSaved==0: runCount=25000
 else: runCount=1
-notfound=0
 total=step1Total=step2Total=step3Total=step4Total=step567Total=0
 tmax=step1max=step2max=step3max=step4max=step567max=0
 step1=step2=step3=step4=step567=0
@@ -61,14 +60,13 @@ for i in range(runCount):
         tmax=max(thisTotal,tmax)
 
         printvars("step1","step2","step3","step4","step567","thisTotal",label="done "+ str(i+1) )
-        printvars("step1max","step2max","step3max","step4max","step567max","tmax",label="done "+ str(i+1) )
         print("average of", i+1, "samples: "
               "step1=",round(step1Total/(i+1),1),
               "step2=",round(step2Total/(i+1),1),
               "step3=",round(step3Total/(i+1),1),
               "step4=",round(step4Total/(i+1),1),
               "step567=",round(step567Total/(i+1),1),
-              "  total",  round(total/(i+1),1)
+              "  total=",  round(total/(i+1),1)
               )        
-printvars("notfound")
+        printvars("step1max","step2max","step3max","step4max","step567max","tmax" )
     
